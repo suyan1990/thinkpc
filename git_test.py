@@ -2,3 +2,4 @@
 #just a test sample
 def test():
     print('hello world')
+    print('hello China')
