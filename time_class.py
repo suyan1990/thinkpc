@@ -2,6 +2,7 @@
 from time import *
 from datetime import *
 from calendar import *
+import math
 
 # time()　　　　——　　返回当前时间戳，浮点数形式，不接受参数。
 #
@@ -23,12 +24,40 @@ from calendar import *
 
 
 # strftime()　　 ——　　将时间元组以指定的格式转换为字符串形式，接受格式化字符串、时间元组，时间元组参数可选，默认为localtime()。
+val_date_num='20200331'
 
-local_time=strftime('%Y-%m-%d %H:%M:%S',localtime())
-print(local_time)
+local_time=datetime.strptime(val_date_num[0:6]+'01','%Y%m%d')+timedelta(days=-1)
 
-#datetime模块
-print(date.today().month)
+
+
+def add_months(datamonth, num):
+    months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    date=datetime.strptime(datamonth,'%Y%m%d')
+    year=date.year
+    day=date.day
+    datamonth = int(datamonth)
+    datamonth_str=int(str(datamonth)[0:6])
+    num = int(num)
+    new_list = []
+    s = math.ceil(abs(num) / 12)
+    for i in range(int(-s), s + 1):
+        new_list += [str(year + i) + x for x in months]
+    new_list = [int(x) for x in new_list]
+    year_new=str(new_list[new_list.index(datamonth_str) + num])[0:4]
+    month_new=str(new_list[new_list.index(datamonth_str) + num])[4:6]
+    monthRange = monthrange(int(year_new), int(month_new))[1]
+    day_new=day
+    if day>monthRange:
+        day_new=monthRange
+    return f'{year_new}{month_new}{day_new}'
+
+
+
+aa=add_months(val_date_num,-1)
+print(aa)
+
+
+
 
 
 
